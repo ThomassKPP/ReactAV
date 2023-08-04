@@ -1,7 +1,7 @@
 export default function handler(req, res) {
     const { id } = req.query;
   
-    const filePath = require('path').join(process.cwd(), 'data/db.json');
+    const filePath = require('path').join(process.cwd(), 'db.json');
     const jsonData = require('fs').readFileSync(filePath, 'utf8');
     const data = JSON.parse(jsonData);
   

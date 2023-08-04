@@ -26,7 +26,7 @@ export default async function handler(req, res) {
         genre: Genre,
       };
 
-      const filePath = path.join(process.cwd(), 'data/db.json');
+      const filePath = path.join(process.cwd(), 'db.json');
       const jsonData = await fs.readFile(filePath, 'utf8');
       const dbData = JSON.parse(jsonData);
 

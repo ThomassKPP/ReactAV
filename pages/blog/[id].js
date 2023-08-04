@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -33,8 +32,6 @@ const BlogPost = ({ article }) => {
   const decimal = rating / maxRating - filledStars / numStars;
   const emptyStars = numStars - filledStars - (decimal > 0 ? 1 : 0);
 
-  const genresArray = article.genre.split(',').map((genre) => genre.trim());
-
   return (
     <div>
       <Header />
@@ -52,17 +49,7 @@ const BlogPost = ({ article }) => {
           <p>{article.description}</p>
         </div>
         <div className={styles.blogSubCategory}>
-          {genresArray.length > 0 ? (
-            <div className={styles.genresWrapper}>
-              {genresArray.map((genre, index) => (
-                <button key={genre} className={styles.genreTag} disabled>
-                  {genre}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <p>No genres available</p>
-          )}
+          <p>Genre: {article.genre}</p>
         </div>
         <div className={styles.blogRating}>
           <p>Note: {article.rating}</p>
@@ -76,15 +63,19 @@ const BlogPost = ({ article }) => {
             ))}
           </div>
         </div>
-        <Link className={styles.modifier} href={`/blog/edit/${id}`}>Modifier cet article</Link>
-        <button className={styles.button} onClick={() => handleDeleteArticle(article.id)}>Supprimer</button>
+        <Link href={`/blog/edit/${id}`} passHref>
+          <p className={styles.modifier}>Modifier cet article</p>
+        </Link>
+        <button className={styles.button} onClick={() => handleDeleteArticle(article.id)}>
+          Supprimer
+        </button>
       </div>
     </div>
   );
 };
 
 export async function getServerSideProps({ params }) {
-  const filePath = require('path').join(process.cwd(), 'data/db.json');
+  const filePath = require('path').join(process.cwd(), 'db.json');
   const jsonData = await require('fs').promises.readFile(filePath, 'utf8');
   const data = JSON.parse(jsonData);
 

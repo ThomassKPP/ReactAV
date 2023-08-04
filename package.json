@@ -16,6 +16,7 @@
     "fs": "^0.0.1-security",
     "json-server": "^0.17.3",
     "next": "13.4.10",
+    "normalize.css": "^8.0.1",
     "path": "^0.12.7",
     "postcss": "8.4.26",
     "react": "18.2.0",

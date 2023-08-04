@@ -11,6 +11,7 @@ const AddArticle = () => {
     rating: '',
     director: '',
     genre: '',
+    
   });
 
   const handleChange = e => {

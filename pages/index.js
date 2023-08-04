@@ -28,13 +28,15 @@ const Home = ({ elements }) => {
   return (
     <div className={styles.bodyWrapper}>
       <AddArticle />
-
-      <input
-        type="text"
-        placeholder="Filtrer par Genre"
-        value={filterText}
-        onChange={e => setFilterText(e.target.value)}
-      />
+      <div className={styles.filterWrapper}>
+        <input
+          type="text"
+          placeholder="Filtrer par Genre"
+          value={filterText}
+          onChange={e => setFilterText(e.target.value)}
+          className={styles.filterInput}
+        />
+      </div>
       <ul className={styles.bloggrid}>
         {filteredData.map(item => (
           <li key={item.id} className={styles.blogitem}>
@@ -67,7 +69,7 @@ const Home = ({ elements }) => {
 };
 
 export async function getServerSideProps() {
-  const filePath = require('path').join(process.cwd(), 'data/db.json');
+  const filePath = require('path').join(process.cwd(), 'db.json');
   const jsonData = await require('fs').promises.readFile(filePath, 'utf8');
   const data = JSON.parse(jsonData);
 

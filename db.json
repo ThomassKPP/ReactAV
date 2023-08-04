@@ -1,19 +1,22 @@
 {
-  "posts": [
+  "elements": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "titre": "La haine",
+      "imageUrl": "https://m.media-amazon.com/images/M/MV5BOTQxOGU0OWUtMzExYy00ZjIxLWJmMzAtNTI1Y2YxYTMxN2RkXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg",
+      "description": "24 hours in the lives of three young men in the French suburbs the day after a violent riot.",
+      "rating": "8.1",
+      "director": "Mathieu Kassovitz",
+      "genre": "Crime, Drama",
+      "id": 1
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "titre": "Pokemon 4Ever: Celebi - Voice of the Forest",
+      "imageUrl": "https://m.media-amazon.com/images/M/MV5BZDZiYjc3MWYtODE5Mi00MDM5LWFkZTAtNjAzZmUxMzc4ZGQxL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+      "description": "Ash must stop a hunter who forces the mythical Pokémon Celebi to help him destroy a forest.",
+      "rating": "5.7",
+      "director": "Kunihiko Yuyama, Jim Malone",
+      "genre": "Animation, Action, Adventure",
+      "id": 2
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

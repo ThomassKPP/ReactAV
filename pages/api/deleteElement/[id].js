@@ -1,4 +1,4 @@
-import data from '../../../data/db.json';
+import data from '../../../db.json';
 import fs from 'fs';
 
 export default function handler(req, res) {
@@ -12,7 +12,7 @@ export default function handler(req, res) {
 
   data.elements.splice(index, 1);
 
-  fs.writeFileSync('data/db.json', JSON.stringify(data, null, 2));
+  fs.writeFileSync('db.json', JSON.stringify(data, null, 2));
 
   return res.status(200).json({ message: 'Element deleted successfully' });
 }
