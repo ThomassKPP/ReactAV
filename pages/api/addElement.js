@@ -6,26 +6,45 @@ export default async function handler(req, res) {
     return res.status(405).end();
   }
 
-  const { nom, author, description, categorie, titre } = req.body;
-  const currentDate = new Date().toISOString().slice(0, 10);
-  const newElement = { nom, author, description, categorie, titre, date: currentDate };
+  const { titre, imageUrl } = req.body;
 
   try {
-    const filePath = path.join(process.cwd(), 'db.json');
-    const jsonData = await fs.readFile(filePath, 'utf8');
-    const data = JSON.parse(jsonData);
+    const apiKey = '26dbee0e';
+    const url = `http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(titre)}&language=fr`;
+    const response = await fetch(url);
+    const data = await response.json();
 
-    let newId = 1;
-    if (data.elements.length > 0) {
-      const lastElement = data.elements[data.elements.length - 1];
-      newId = lastElement.id + 1;
+    if (data.Response === 'True') {
+      const { Plot, imdbRating, Director, Genre, Poster } = data;
+
+      const newElement = {
+        titre,
+        imageUrl: Poster,
+        description: Plot,
+        rating: imdbRating,
+        director: Director,
+        genre: Genre,
+      };
+
+      const filePath = path.join(process.cwd(), 'data/db.json');
+      const jsonData = await fs.readFile(filePath, 'utf8');
+      const dbData = JSON.parse(jsonData);
+
+      let newId = 1;
+      if (dbData.elements.length > 0) {
+        const lastElement = dbData.elements[dbData.elements.length - 1];
+        newId = lastElement.id + 1;
+      }
+
+      newElement.id = newId;
+      dbData.elements.push(newElement);
+
+      await fs.writeFile(filePath, JSON.stringify(dbData));
+      res.status(200).json(newElement);
+    } else {
+      console.error('Movie not found');
+      res.status(404).end();
     }
-
-    newElement.id = newId;
-    data.elements.push(newElement);
-
-    await fs.writeFile(filePath, JSON.stringify(data));
-    res.status(200).json(newElement);
   } catch (error) {
     console.error('Error adding element:', error);
     res.status(500).end();

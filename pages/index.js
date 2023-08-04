@@ -1,128 +1,65 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
+import axios from 'axios';
+import styles from '../styles/blogList.module.css';
+import AddArticle from './add-article';
 
 const Home = ({ elements }) => {
   const [filterText, setFilterText] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
-  const [newElement, setNewElement] = useState({
-    nom: '',
-    author: '',
-    description: '',
-    categorie: '',
-    titre: '',
-  });
-  const [categories, setCategories] = useState([]);
 
-  const uniqueCategories = [...new Set(elements.map(item => item.categorie))];
-  useEffect(() => {
-    setCategories(uniqueCategories);
-  }, [elements]);
-
-  const filteredData = elements.filter(item =>
-    item.titre.toLowerCase().includes(filterText.toLowerCase()) &&
-    (!filterCategory || item.categorie === filterCategory)
+  const filteredData = elements.filter(
+    item =>
+      item.genre.toLowerCase().includes(filterText.toLowerCase()) &&
+      (!filterCategory || item.categorie === filterCategory)
   );
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setNewElement(prevState => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSubmit = async () => {
-    const response = await fetch('/api/addElement', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newElement),
-    });
-
-    if (response.ok) {
-      setNewElement({
-        nom: '',
-        author: '',
-        description: '',
-        categorie: '',
-        titre: '',
-      });
-      location.reload();
+  const handleDeleteArticle = async id => {
+    try {
+      const response = await axios.delete(`/api/deleteElement/${id}`);
+      if (response.status === 200) {
+        location.reload();
+      }
+    } catch (error) {
+      console.error('Error while deleting article:', error);
     }
   };
 
   return (
-    <div>
-      <Head>
-        <link rel="stylesheet" href="/style.css" />
-        <link rel="stylesheet" href="/blog-style.css" />
-      </Head>
-      <form>
-        <textarea
-          placeholder="Description"
-          name="description"
-          value={newElement.description}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="Nom"
-          name="nom"
-          value={newElement.nom}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="Auteur"
-          name="author"
-          value={newElement.author}
-          onChange={handleChange}
-        />
-        <select
-          name="categorie"
-          value={newElement.categorie}
-          onChange={handleChange}
-        >
-          <option value="">Sélectionnez une catégorie</option>
-          {categories.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          placeholder="Titre"
-          name="titre"
-          value={newElement.titre}
-          onChange={handleChange}
-        />
-        <button type="button" onClick={handleSubmit}>
-          Ajouter
-        </button>
-      </form>
+    <div className={styles.bodyWrapper}>
+      <AddArticle />
 
       <input
         type="text"
-        placeholder="Filtrer par titre"
+        placeholder="Filtrer par Genre"
         value={filterText}
         onChange={e => setFilterText(e.target.value)}
       />
-      <select
-        value={filterCategory}
-        onChange={e => setFilterCategory(e.target.value)}
-      >
-        <option value="">Toutes les catégories</option>
-        {categories.map((category, index) => (
-          <option key={index} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
-      <ul>
+      <ul className={styles.bloggrid}>
         {filteredData.map(item => (
-          <li key={item.id}>
-            <Link href={`/blog/${item.id}`}>{item.titre}</Link>
-        </li>
+          <li key={item.id} className={styles.blogitem}>
+            <div className={styles.blogItemwrap}>
+              <img src={item.imageUrl} className={styles.blogItemcover} />
+              <h3 className={styles.Titre}>{item.titre}</h3>
+              <div className={styles.genresWrapper}>
+                {item.genre.split(', ').map(genre => (
+                  <button key={genre} className={styles.genreTag} disabled>
+                    {genre}
+                  </button>
+                ))}
+              </div>
+              <p className={styles.blogItemdesc}>{item.description}</p>
+
+              <div className={styles.buttonT}>
+                <Link className={styles.voirPlus} href={`/blog/${item.id}`}>
+                  Lire plus
+                </Link>
+                <button className={styles.button} onClick={() => handleDeleteArticle(item.id)}>
+                  Supprimer
+                </button>
+              </div>
+            </div>
+          </li>
         ))}
       </ul>
     </div>
@@ -130,7 +67,7 @@ const Home = ({ elements }) => {
 };
 
 export async function getServerSideProps() {
-  const filePath = require('path').join(process.cwd(), 'db.json');
+  const filePath = require('path').join(process.cwd(), 'data/db.json');
   const jsonData = await require('fs').promises.readFile(filePath, 'utf8');
   const data = JSON.parse(jsonData);
 
@@ -142,3 +79,4 @@ export async function getServerSideProps() {
 }
 
 export default Home;
+

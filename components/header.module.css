@@ -1,0 +1,34 @@
+.bodyWrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background-color: #000;
+  color: #fff;
+  padding: 16px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.header nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 8px;
+}
+
+.header nav a:hover {
+  background-color: #fff;
+  color: #000;
+  border-radius: 4px;
+}

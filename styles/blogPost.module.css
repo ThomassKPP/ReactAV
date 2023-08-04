@@ -1,0 +1,118 @@
+.blogWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto; 
+  }
+
+.blogHeader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.blogHeader h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.blogDate {
+  font-size: 14px;
+  color: #888;
+}
+
+.blogImage {
+  width: 100%;
+  height: auto;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.blogDesc {
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.blogSubCategory p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.blogRating {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #f5b900;
+}
+
+.starContainer {
+  margin-left: 10px;
+}
+
+.starIcon {
+  margin-right: 5px;
+}
+
+
+.button {
+  padding: 10px 20px;
+  background-color: black;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #d32f2f;
+}
+.genresWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.genreTag {
+  padding: 4px 8px;
+  margin: 4px;
+  border-radius: 12px;
+  background-color: black;
+  color: white;
+}
+
+.modifier {
+  font-family: 'montserrat', sans-serif;
+  text-decoration: none;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.modifier button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #0070f3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.modifier a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #0070f3;
+  cursor: pointer;
+}
+
+.modifier button:hover,
+.modifier a:hover {
+  background-color: #0053a0;
+}
